@@ -3,7 +3,13 @@ var ee = require("@google/earthengine");
 const express = require("express");
 const router = express.Router();
 const cors = require("cors");
-var privateKey = require("./privatekey.json");
+var privateKey =
+  process.env.GCP_SERVICE_ACCOUNT && process.env.GCP_PRIVATE_KEY
+    ? {
+        private_key: process.env.GCP_PRIVATE_KEY,
+        client_email: process.env.GCP_SERVICE_ACCOUNT,
+      }
+    : require("./privateKey");
 const port = process.env.PORT || 8000;
 
 app = express();
